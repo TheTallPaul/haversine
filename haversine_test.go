@@ -1,8 +1,9 @@
 package haversine
 
 import (
-  "testing"
-  "google.golang.org/genproto/googleapis/type/latlng"
+	"testing"
+
+	"google.golang.org/genproto/googleapis/type/latlng"
 )
 
 var zeroPoint = latlng.LatLng{Latitude: 0.0, Longitude: 0.0}
@@ -21,18 +22,18 @@ var haversineTestCases = []struct {
 	{
 		&zeroPoint,
 		&onePoint,
-		157425.537108412,
+		157249.38127194397,
 	},
 	{
 		&broadwayYamhill,
 		&pioneerCourthouse,
-		99.99999999829213,
+		99.88810211965017,
 	},
 }
 
 func TestHaversine(t *testing.T) {
 	for _, input := range haversineTestCases {
-		distance := haversine(input.pointA, input.pointB)
+		distance := Haversine(input.pointA, input.pointB)
 
 		if distance != input.expectedDistance {
 			t.Errorf(
