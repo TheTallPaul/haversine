@@ -14,7 +14,7 @@ var pioneerCourthouse = latlng.LatLng{
 	Longitude: -122.67871393198214,
 }
 
-var haversineTestCases = []struct {
+var haversineDistanceTestCases = []struct {
 	pointA           *latlng.LatLng
 	pointB           *latlng.LatLng
 	expectedDistance float64
@@ -31,14 +31,14 @@ var haversineTestCases = []struct {
 	},
 }
 
-func TestHaversine(t *testing.T) {
-	for _, input := range haversineTestCases {
-		distance := Haversine(input.pointA, input.pointB)
+func TestHaversineDistance(t *testing.T) {
+	for _, input := range haversineDistanceTestCases {
+		distance := HaversineDistance(input.pointA, input.pointB)
 
 		if distance != input.expectedDistance {
 			t.Errorf(
 				"FAIL: Want distance from (%v, %v) to (%v, %v) to be: "+
-					"%v but we got %v",
+					"%v me but we got %v m",
 				input.pointA.Latitude,
 				input.pointA.Longitude,
 				input.pointB.Latitude,
