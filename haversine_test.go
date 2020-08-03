@@ -3,10 +3,12 @@ package haversine
 import (
 	"testing"
 
+	"github.com/adrianmo/go-nmea"
 	"google.golang.org/genproto/googleapis/type/latlng"
 	"googlemaps.github.io/maps"
 )
 
+// googleapis
 var zeroPoint = latlng.LatLng{Latitude: 0.0, Longitude: 0.0}
 var onePoint = latlng.LatLng{Latitude: 1.0, Longitude: -1.0}
 var broadwayYamhill = latlng.LatLng{Latitude: 45.518673, Longitude: -122.679996}
@@ -32,6 +34,7 @@ var haversineDistanceTestCases = []struct {
 	},
 }
 
+// maps
 var zeroPointMaps = maps.LatLng{Lat: 0.0, Lng: 0.0}
 var onePointMaps = maps.LatLng{Lat: 1.0, Lng: -1.0}
 var broadwayYamhillMaps = maps.LatLng{Lat: 45.518673, Lng: -122.679996}
@@ -57,6 +60,31 @@ var haversineDistanceTestCasesMaps = []struct {
 	},
 }
 
+// nmea
+var sentence = nmea.BaseSentence{}
+var zeroPointGLL = nmea.GLL{
+	BaseSentence: sentence,
+	Latitude:     0.0,
+	Longitude:    0.0,
+}
+var onePointGLL = nmea.GLL{
+	BaseSentence: sentence,
+	Latitude:     1.0,
+	Longitude:    1.0,
+}
+
+var haversineDistanceTestCasesNMEA = []struct {
+	pointA           nmea.GLL
+	pointB           nmea.GLL
+	expectedDistance float64
+}{
+	{
+		zeroPointGLL,
+		onePointGLL,
+		157249.38127194397,
+	},
+}
+
 func TestHaversineDistance(t *testing.T) {
 	for _, input := range haversineDistanceTestCases {
 		distance := HaversineDistance(input.pointA, input.pointB)
@@ -64,7 +92,7 @@ func TestHaversineDistance(t *testing.T) {
 		if distance != input.expectedDistance {
 			t.Errorf(
 				"FAIL: Want distance from (%v, %v) to (%v, %v"+
-					") to be: %v me but we got %v m ("+
+					") to be: %v m but we got %v m ("+
 					"latlng package)",
 				input.pointA.Latitude,
 				input.pointA.Longitude,
@@ -82,8 +110,8 @@ func TestHaversineDistance(t *testing.T) {
 		if distance != input.expectedDistance {
 			t.Errorf(
 				"FAIL: Want distance from (%v, %v) to (%v, %v"+
-					") to be: %v me but we got %v m ("+
-					"maps package)",
+					") to be: %v m but we got %v m (maps "+
+					"package)",
 				input.pointA.Lat,
 				input.pointA.Lng,
 				input.pointB.Lat,
@@ -94,4 +122,21 @@ func TestHaversineDistance(t *testing.T) {
 		}
 	}
 
+	for _, input := range haversineDistanceTestCasesNMEA {
+		distance := HaversineDistance(input.pointA, input.pointB)
+
+		if distance != input.expectedDistance {
+			t.Errorf(
+				"FAIL: Want distance from (%v, %v) to (%v, %v"+
+					") to be: %v m but we got %v m (nmea "+
+					"package)",
+				input.pointA.Latitude,
+				input.pointA.Longitude,
+				input.pointB.Latitude,
+				input.pointB.Longitude,
+				input.expectedDistance,
+				distance,
+			)
+		}
+	}
 }

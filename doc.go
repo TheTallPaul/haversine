@@ -33,5 +33,4 @@ meters:
 Output:
   Distance between (0, 0) and (1, -1): 157249.38127194397 meters
 */
-
 package haversine
