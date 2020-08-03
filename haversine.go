@@ -84,7 +84,8 @@ func HaversineDistance(pointA, pointB interface{}) float64 {
 }
 
 // HaversineFormula finds the Haversine distance from the latitude and longitude
-// pairs of A and B
+// pairs of A and B. Use this if you don't want to use any structs to find the
+// distance between two points.
 func HaversineFormula(latA, longA, latB, longB float64) float64 {
 	latA *= degreesToRadians
 	latB *= degreesToRadians
