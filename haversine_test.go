@@ -36,7 +36,7 @@ var zeroPointMaps = maps.LatLng{Lat: 0.0, Lng: 0.0}
 var onePointMaps = maps.LatLng{Lat: 1.0, Lng: -1.0}
 var broadwayYamhillMaps = maps.LatLng{Lat: 45.518673, Lng: -122.679996}
 var pioneerCourthouseMaps = maps.LatLng{
-	Lat:  45.51867299282918,
+	Lat: 45.51867299282918,
 	Lng: -122.67871393198214,
 }
 
